@@ -1,53 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
-    .container {
-      background: white;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    p {
-      color: #555;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justin — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDF1F0;
+    --paper-2:#E2E8E6;
+    --ink:#1C2B3A;
+    --gold:#C99A2E;
+    --coral:#E2725B;
+    --line: rgba(28,43,58,0.15);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 32px;position:sticky;top:0;background:var(--paper);
+    z-index:10;border-bottom:1px solid var(--line);
+  }
+  .brand{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px;letter-spacing:0.05em;}
+  nav ul{list-style:none;display:flex;gap:28px;margin:0;padding:0;font-size:14px;}
+  nav a{text-decoration:none;opacity:0.75;transition:opacity .2s;}
+  nav a:hover{opacity:1;}
+
+  /* HERO */
+  .hero{
+    display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;
+    align-items:center;padding:80px 0 60px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:14px;
+  }
+  h1{
+    font-family:'Libre Caslon Text',serif;font-size:clamp(40px,6vw,64px);
+    line-height:1.05;margin:0 0 18px;font-weight:700;
+  }
+  .hero p{font-size:17px;line-height:1.6;max-width:46ch;opacity:0.85;}
+  .id-card{
+    position:relative;background:#fff;border:1px solid var(--line);
+    border-radius:4px;padding:18px;box-shadow:0 12px 30px rgba(28,43,58,0.08);
+  }
+  .id-card .photo{
+    width:100%;aspect-ratio:3/4;background:var(--paper-2);
+    border-radius:2px;display:flex;align-items:center;justify-content:center;
+    color:var(--ink);opacity:0.4;font-size:13px;overflow:hidden;
+  }
+  .id-card .photo img{width:100%;height:100%;object-fit:cover;}
+  .id-card .caption{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;
+  }
+  .stamp{
+    position:absolute;top:-16px;right:-16px;width:64px;height:64px;
+    border-radius:50%;background:var(--gold);color:#fff;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+    transform:rotate(12deg);letter-spacing:0.03em;line-height:1.3;
+    border:2px dashed rgba(255,255,255,0.7);
+  }
+
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px;}
+  .section-head .num{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:13px;}
+  .section-head h2{font-family:'Libre Caslon Text',serif;font-size:28px;margin:0;font-weight:700;}
+
+  /* SKILLS - transcript style rows */
+  .subject-row{
+    display:grid;grid-template-columns:160px 1fr 60px;gap:16px;align-items:center;
+    padding:14px 0;border-bottom:1px solid var(--line);font-size:14px;
+  }
+  .subject-row:last-child{border-bottom:none;}
+  .subject-name{font-weight:600;}
+  .bar-track{height:6px;background:var(--paper-2);border-radius:3px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--coral);border-radius:3px;}
+  .subject-grade{font-family:'JetBrains Mono',monospace;text-align:right;color:var(--gold);}
+
+  /* CERTIFICATES */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;}
+  .cert-card{
+    background:#fff;border:1px solid var(--line);border-radius:4px;
+    padding:16px;position:relative;
+  }
+  .cert-card .thumb{
+    width:100%;aspect-ratio:4/3;background:var(--paper-2);border-radius:2px;
+    display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0.5;
+    overflow:hidden;margin-bottom:12px;
+  }
+  .cert-card .thumb img{width:100%;height:100%;object-fit:cover;}
+  .cert-card h3{font-size:15px;margin:0 0 4px;}
+  .cert-card p{font-size:12px;opacity:0.65;margin:0;font-family:'JetBrains Mono',monospace;}
+  .ribbon{
+    position:absolute;top:10px;right:10px;background:var(--ink);color:#fff;
+    font-size:10px;font-family:'JetBrains Mono',monospace;padding:3px 8px;
+    border-radius:2px;letter-spacing:0.04em;
+  }
+
+  /* PROJECTS */
+  .project{
+    display:grid;grid-template-columns:80px 1fr;gap:20px;padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .project:last-child{border-bottom:none;}
+  .project .index{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:22px;}
+  .project h3{margin:0 0 6px;font-size:17px;}
+  .project p{margin:0;font-size:14px;opacity:0.75;line-height:1.5;}
+  .tag{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;
+    background:var(--paper-2);padding:2px 8px;border-radius:10px;margin-top:8px;margin-right:6px;
+  }
+
+  footer{padding:50px 0 70px;text-align:center;}
+  footer h2{font-family:'Libre Caslon Text',serif;font-size:26px;margin:0 0 10px;}
+  footer p{opacity:0.7;margin:0 0 20px;}
+  .contact-btn{
+    display:inline-block;background:var(--ink);color:#fff;text-decoration:none;
+    padding:12px 28px;border-radius:2px;font-size:14px;font-family:'JetBrains Mono',monospace;
+    transition:background .2s;
+  }
+  .contact-btn:hover{background:var(--coral);}
+
+  @media (max-width:720px){
+    .hero{grid-template-columns:1fr;}
+    .subject-row{grid-template-columns:100px 1fr 44px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+  a:focus-visible, button:focus-visible{outline:2px solid var(--coral);outline-offset:2px;}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>It works!</h1>
-    <p>If you can see this page, your GitHub Pages site is live and working.</p>
-    <button onclick="document.getElementById('msg').innerText = 'Nice, JavaScript works too!'">Click me</button>
-    <p id="msg"></p>
-  </div>
+
+<nav>
+  <div class="brand">JUSTIN.DEV</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero" id="about" style="border-top:none;">
+    <div>
+      <div class="eyebrow">Grade 11 — St. Andrew's College</div>
+      <h1>Hi, I'm Justin.</h1>
+      <p>I build small programs, solve competitive coding problems, and I'm always working through something new in Functions, Physics, or French. This page is where I keep a record of what I've made and earned.</p>
+    </div>
+    <div class="id-card">
+      <div class="stamp">STUDENT<br>ID</div>
+      <div class="photo">
+        <!-- Replace src below with your own photo -->
+        <img src="your-photo.jpg" alt="Justin" onerror="this.parentElement.innerText='Add your-photo.jpg'">
+      </div>
+      <div class="caption">
+        <span>J. — SAC</span>
+        <span>2026</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head"><span class="num">01</span><h2>Skills</h2></div>
+    <div class="subject-row">
+      <span class="subject-name">Python</span>
+      <span class="bar-track"><span class="bar-fill" style="width:80%"></span></span>
+      <span class="subject-grade">A</span>
+    </div>
+    <div class="subject-row">
+      <span class="subject-name">Functions (MCR3U)</span>
+      <span class="bar-track"><span class="bar-fill" style="width:70%"></span></span>
+      <span class="subject-grade">B+</span>
+    </div>
+    <div class="subject-row">
+      <span class="subject-name">French</span>
+      <span class="bar-track"><span class="bar-fill" style="width:60%"></span></span>
+      <span class="subject-grade">B</span>
+    </div>
+    <div class="subject-row">
+      <span class="subject-name">Physics/Chem</span>
+      <span class="bar-track"><span class="bar-fill" style="width:65%"></span></span>
+      <span class="subject-grade">B+</span>
+    </div>
+  </section>
+
+  <section id="certificates">
+    <div class="section-head"><span class="num">02</span><h2>Certificates</h2></div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <span class="ribbon">2026</span>
+        <div class="thumb">
+          <!-- Replace src with your certificate image -->
+          <img src="certificate-1.jpg" alt="Certificate" onerror="this.parentElement.innerText='Add certificate-1.jpg'">
+        </div>
+        <h3>Certificate Title</h3>
+        <p>ISSUING ORGANIZATION</p>
+      </div>
+      <div class="cert-card">
+        <span class="ribbon">2025</span>
+        <div class="thumb">
+          <img src="certificate-2.jpg" alt="Certificate" onerror="this.parentElement.innerText='Add certificate-2.jpg'">
+        </div>
+        <h3>Certificate Title</h3>
+        <p>ISSUING ORGANIZATION</p>
+      </div>
+      <div class="cert-card">
+        <span class="ribbon">2025</span>
+        <div class="thumb">
+          <img src="certificate-3.jpg" alt="Certificate" onerror="this.parentElement.innerText='Add certificate-3.jpg'">
+        </div>
+        <h3>Certificate Title</h3>
+        <p>ISSUING ORGANIZATION</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head"><span class="num">03</span><h2>Projects</h2></div>
+    <div class="project">
+      <span class="index">01</span>
+      <div>
+        <h3>DMOJ Problem Set</h3>
+        <p>A collection of solved competitive programming problems, written in clean, iterative Python.</p>
+        <span class="tag">Python</span><span class="tag">Algorithms</span>
+      </div>
+    </div>
+    <div class="project">
+      <span class="index">02</span>
+      <div>
+        <h3>This Portfolio</h3>
+        <p>A single-page site built with plain HTML and CSS, hosted on GitHub Pages.</p>
+        <span class="tag">HTML/CSS</span><span class="tag">GitHub Pages</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer id="contact">
+  <h2>Let's talk</h2>
+  <p>Reach me by email or find me on GitHub.</p>
+  <a class="contact-btn" href="mailto:you@example.com">Email Me</a>
+</footer>
+
 </body>
 </html>
